@@ -31,6 +31,8 @@ class Tgpt < Formula
     assert_match version.to_s, shell_output("#{bin}/tgpt --version")
 
     output = shell_output("#{bin}/tgpt --provider pollinations \"What is 1+1\"")
-    assert_match(/(1|one)\s*(\+|\splus\s|\sand\s)\s*(1|one)\s*(\sequals\s|\sis\s|=)\s*(2|two)/i, output)
+    # Remove loading spinner and carriage returns from output
+    cleaned_output = output.gsub(/\r[^\n]*/, "").strip
+    assert_match(/(1|one)\s*(\+|\splus\s|\sand\s)\s*(1|one)\s*(\sequals\s|\sis\s|=)\s*(2|two)/i, cleaned_output)
   end
 end
